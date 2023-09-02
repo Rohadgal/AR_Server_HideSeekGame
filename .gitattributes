@@ -1,1 +1,7 @@
 com.ptc.vuforia.engine-10.17.4.tgz filter=lfs diff=lfs merge=lfs -text
+cloud_reco.mp4 filter=lfs diff=lfs merge=lfs -text
+image_target.mp4 filter=lfs diff=lfs merge=lfs -text
+Astronaut.FBX filter=lfs diff=lfs merge=lfs -text
+advanced_model_target.mp4 filter=lfs diff=lfs merge=lfs -text
+area_target.mp4 filter=lfs diff=lfs merge=lfs -text
+barcode.mp4 filter=lfs diff=lfs merge=lfs -text
