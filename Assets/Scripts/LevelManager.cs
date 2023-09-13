@@ -6,10 +6,6 @@ public class LevelManager : MonoBehaviour {
     public static LevelManager s_instance;
 
     LevelState m_levelState;
-    float time = 2;
-    float secondsToWait = 4f;
-    int enemySpawnArea = 0;
-
 
     private void Awake() {
         if (FindObjectOfType<LevelManager>() != null &&
@@ -23,8 +19,6 @@ public class LevelManager : MonoBehaviour {
     private void Start() {
         GameManager.s_instance.changeGameSate(GameState.Playing);
         //PlayerManager.instance.ChangePlayerState(PlayerState.Idle);
- 
-
     }
 
     private void Update() {
@@ -41,25 +35,12 @@ public class LevelManager : MonoBehaviour {
         m_levelState = state;
     }
 
-    public float getTime() { return time; }
-
-    public float getSecondsToWait() { return secondsToWait; }
-
-    private void OnTriggerEnter2D(Collider2D collision) {
-        if (collision.CompareTag("Player")) {
-            enemySpawnArea++;
-        }
-    }
-    public int getEnemySpawnArea() { return enemySpawnArea; }
-
-    public void setEnemySpawnArea(int t_spawnArea) {
-        enemySpawnArea = t_spawnArea;
-    }
 }
 
 
 public enum LevelState {
     None,
+    Pause,
     Continue,
     LevelFinished,
     GameOver

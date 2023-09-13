@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QCARConfig>
   <Tracking>
+    <ImageTarget name="3" size="30.000000 46.153847" />
+    <ImageTarget name="2" size="30.000000 39.576271" />
+    <ImageTarget name="1" size="30.000000 39.491524" />
     <ImageTarget name="notebook" size="30.000000 40.894569" />
   </Tracking>
 </QCARConfig>

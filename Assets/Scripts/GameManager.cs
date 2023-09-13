@@ -1,10 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+
     public static GameManager s_instance;
     public GameObject canvas;
    
@@ -17,23 +16,25 @@ public class GameManager : MonoBehaviour
         } else {
             s_instance = this;
         }
-
         m_gameState = GameState.None;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(m_gameState == GameState.GameOver) {
             // gameOver();
         }
         if(m_gameState == GameState.GameFinished) {
-            //gameFinished();
+            gameFinished();
         }
     }
 
     public void loadMainMenu() {
         //SceneManager.LoadScene("MainMenu");
+    }
+
+    void gameFinished() {
+
     }
 
     public void changeGameSate(GameState t_newState) {
@@ -64,18 +65,19 @@ public class GameManager : MonoBehaviour
         levelIndex = SceneManager.GetActiveScene().buildIndex;
         //Debug.Log("Manager ChangeScene");
 
-        if (SceneManager.GetActiveScene().name == "LevelThree1") {
+        if (SceneManager.GetActiveScene().name == "Game") {
             m_gameState = GameState.GameFinished;
             //Debug.Log("Corutina!!!!");
             //StartCoroutine(openCredits());
             return;
         }
 
-        //Debug.Log("Hasta aca lleg?");
+        
         if (levelIndex < SceneManager.sceneCountInBuildSettings - 1) {
             levelIndex++;
             SceneManager.LoadScene(levelIndex);
         }
+
         //else {
         //    m_gameState = GameState.GameFinished;
         //}
