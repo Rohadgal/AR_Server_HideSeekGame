@@ -1,5 +1,4 @@
-using Microsoft.Unity.VisualStudio.Editor;
-using Unity.VisualScripting;
+using System.Collections;
 using UnityEngine;
 
 public class findCreaturesGameManager : MonoBehaviour
@@ -10,15 +9,21 @@ public class findCreaturesGameManager : MonoBehaviour
     [SerializeField]
     GameObject[] imagesOnScreen;
     GameObject[] checkedCreaturesArray;
+   // [SerializeField]
+    //ParticleController[] particleController;
+    [SerializeField]
+    GameObject canvasWinImage;
     #endregion
-
     #region Private
-    LevelManager levelManager = LevelManager.s_instance;
+   // LevelManager levelManager = LevelManager.s_instance;
+    GameManager gameManager = GameManager.s_instance;
     int index;
     #endregion
 
     void Start()
     {
+        GameManager.OnGameFinished += HandleGameFinished;
+
         index = 0;
         checkedCreaturesArray = new GameObject[creatureModelsArray.Length];
         for(int i = 0; i < checkedCreaturesArray.Length; i++) {
@@ -39,6 +44,9 @@ public class findCreaturesGameManager : MonoBehaviour
 
         if(index >= creatureModelsArray.Length) {
             Debug.Log("Game Finished");
+            canvasWinImage.SetActive(true);
+            StartCoroutine(Restart());
+           gameManager.changeGameSate(GameState.GameFinished);
             return;
         }
 
@@ -51,24 +59,20 @@ public class findCreaturesGameManager : MonoBehaviour
                 index++;
             }
         }
-        //for (int i = 0; i < creatureModelsArray.Length; i++) {
-        //    if (creatureModelsArray[i] == null) {
-        //        return;
-        //    }
-        //    if (creatureModelsArray[i].activeSelf && checkedCreaturesArray[i] != creatureModelsArray[i]) {
-        //        imagesOnScreen[i].gameObject.SetActive(false);
-        //        checkedCreaturesArray[i] = creatureModelsArray[i];
-        //        Debug.Log("Thisssss");
-        //        index++;
-        //    }
-        //}
 
-        //if (index >= creatureModelsArray.Length) {
-        //    levelManager.changeLevelState(LevelState.LevelFinished);
-        //}
+    }
 
+    private void OnDestroy() {
+        // Unsubscribe from the event when the script is destroyed.
+        GameManager.OnGameFinished -= HandleGameFinished;
+    }
 
-        //Debug.Log("Index: " + index);
+    private void HandleGameFinished() {
+        StartCoroutine(Restart());
+    }
 
+    IEnumerator Restart() {
+        yield return new WaitForSeconds(3f);
+        gameManager.changeGameSate(GameState.LoadMenu);
     }
 }

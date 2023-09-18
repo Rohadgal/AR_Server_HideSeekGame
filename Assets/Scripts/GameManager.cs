@@ -6,7 +6,10 @@ public class GameManager : MonoBehaviour
 
     public static GameManager s_instance;
     public GameObject canvas;
-   
+
+    public delegate void GameFinishedEventHandler();
+    public static event GameFinishedEventHandler OnGameFinished;
+
     GameState m_gameState;
     int levelIndex;
 
@@ -27,14 +30,18 @@ public class GameManager : MonoBehaviour
         if(m_gameState == GameState.GameFinished) {
             gameFinished();
         }
+        if (m_gameState == GameState.LoadMenu) {
+            loadMainMenu();
+        }
     }
 
     public void loadMainMenu() {
-        //SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene("MainMenu");
     }
 
     void gameFinished() {
-
+        Debug.Log("this happened");
+        OnGameFinished?.Invoke();
     }
 
     public void changeGameSate(GameState t_newState) {
@@ -72,15 +79,15 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        
+
         if (levelIndex < SceneManager.sceneCountInBuildSettings - 1) {
             levelIndex++;
             SceneManager.LoadScene(levelIndex);
         }
 
-        //else {
-        //    m_gameState = GameState.GameFinished;
-        //}
+        // else {
+        //  m_gameState = GameState.GameFinished;
+      //}
     }
 
     public GameState getGameState() { return m_gameState; }
@@ -88,6 +95,8 @@ public class GameManager : MonoBehaviour
     public void exitGame() {
         Application.Quit();
     }
+
+
 
 }
 
